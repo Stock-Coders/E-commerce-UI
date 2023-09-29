@@ -9,7 +9,9 @@ class RatingApiController extends Controller
     //get All Ratings
     public Function getRatings(){
         //get All Ratings
-        $ratings = Rating::all();
+        $ratings = Rating::with(['product' => function ($query) {
+            $query->select('id', 'title');
+        }])->get();
         return response()->json($ratings);
     }
 

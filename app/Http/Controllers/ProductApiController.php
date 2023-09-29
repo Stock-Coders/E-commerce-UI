@@ -9,7 +9,9 @@ class ProductApiController extends Controller
 {
     //get All Products Api
     public function getProducts(){
-        $products = Product::all();
+        $products = Product::with(['category' => function ($query) {
+            $query->select('id', 'title');
+        }])->get();
         return response()->json($products);
     }
 
